@@ -9,26 +9,11 @@ const roleBuilder = {
         }
 
         if (!creep.memory.working) {
-            const tombStones: Tombstone[] | undefined = creep.room.find(FIND_TOMBSTONES, {
-                filter: (tombStones: Tombstone) => {
-                    return tombStones.store.getUsedCapacity() > 0;
-                }
-            });
-            const dropperResouses: Resource[] = creep.room.find(FIND_DROPPED_RESOURCES);
-            if (tombStones.length > 0) {
-                if (creep.withdraw(tombStones[0], RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-                    creep.moveTo(tombStones[0], { visualizePathStyle: { stroke: '#ffffff' } });
-                }
-            } else if (dropperResouses.length > 0) {
-                if (creep.pickup(dropperResouses[0]) === ERR_NOT_IN_RANGE) {
-                    creep.moveTo(dropperResouses[0], { visualizePathStyle: { stroke: '#ffffff' } });
-                }
-            } else {
-                const storage = creep.room.storage;
-                if (storage && creep.withdraw(storage, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-                    creep.moveTo(storage, { visualizePathStyle: { stroke: '#ffffff' } });
-                }
+            const storage = creep.room.storage;
+            if (storage && creep.withdraw(storage, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+                creep.moveTo(storage, { visualizePathStyle: { stroke: '#ffffff' } });
             }
+
         } else {
             const buildingStructures: ConstructionSite[] | undefined = creep.room.find(FIND_CONSTRUCTION_SITES);
             if (buildingStructures.length > 0) {
