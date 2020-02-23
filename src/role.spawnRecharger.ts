@@ -15,7 +15,7 @@ const roleSpawnrecharger = {
             }
         } else {
             const spawnAndExtentions: AnyStructure[] | undefined = creep.room.find(FIND_STRUCTURES, {
-                filter: (structure: AnyStructure) => {
+                filter(structure: AnyStructure) {
                     return (structure instanceof StructureExtension ||
                         structure instanceof StructureSpawn ||
                         structure instanceof StructureTower) &&

@@ -5,6 +5,8 @@ import roleUpgrader from './role.upgrader';
 import roleTower from './role.tower';
 import roleSpawnrecharger from './role.spawnRecharger';
 import roleBuilder from './role.builder';
+import roleLink from "./role.link";
+import roleLinkTransporter from "./role.linkTransporter";
 import _ from "lodash";
 
 // When compiling TS to JS and bundling with rollup, the line numbers and file names in error messages change
@@ -16,7 +18,6 @@ export const loop = ErrorMapper.wrapLoop(() => {
             delete Memory.creeps[name];
         }
     }
-
     const currentRoom = Game.rooms['W13S24'];
 
     const { energyCapacityAvailable } = currentRoom;
@@ -30,18 +31,20 @@ export const loop = ErrorMapper.wrapLoop(() => {
     const harvesters = _.filter(Game.creeps, (creep) => creep.memory.role === 'harvester');
     const upgraders = _.filter(Game.creeps, (creep) => creep.memory.role === 'upgrader');
     const spawnRechargers = _.filter(Game.creeps, (creep) => creep.memory.role === 'spawnRecharger');
-    const spawnBuiler = _.filter(Game.creeps, (creep) => creep.memory.role === 'builder');
+    const spawnBuilers = _.filter(Game.creeps, (creep) => creep.memory.role === 'builder');
+    const linkTransporter = _.filter(Game.creeps, (creep) => creep.memory.role === 'linkTransporter');
 
     const [source1, source2] = currentRoom.find(FIND_SOURCES);
 
-    const shouldSpanHarverster: boolean = harvesters.length < 2;
+    const shouldSpanHarverster: boolean = harvesters.length < 1;
     const shouldSpanUpgrader: boolean = upgraders.length < 2;
     const shouldSpawnspawnRecharger: boolean = spawnRechargers.length < 1;
-    const shouldSpawnBuilder: boolean = spawnBuiler.length < 1;
+    const shouldSpawnBuilder: boolean = spawnBuilers.length < 1;
+    const shouldSpawnLinkTransporter: boolean = linkTransporter.length < 1;
 
     if (shouldSpanHarverster) {
         const newName = 'H' + Game.time;
-        Game.spawns['Spawn1'].spawnCreep(creepSkills, newName,
+        Game.spawns['Spawn1'].spawnCreep([WORK, WORK, WORK, WORK, WORK, CARRY, MOVE], newName,
             { memory: { role: 'harvester', sourceId: source2.id, working: true } });
     }
 
@@ -63,8 +66,15 @@ export const loop = ErrorMapper.wrapLoop(() => {
             { memory: { role: 'builder', sourceId: '', working: true } });
     }
 
+    if (shouldSpawnLinkTransporter) {
+        const newName = 'LT' + Game.time;
+        Game.spawns['Spawn1'].spawnCreep([MOVE, CARRY, CARRY], newName,
+            { memory: { role: 'linkTransporter', sourceId: '', working: true } });
+    }
+
+
     const towers: AnyStructure[] | undefined = currentRoom.find(FIND_STRUCTURES, {
-        filter: (structure: AnyStructure) => {
+        filter(structure: AnyStructure) {
             return structure instanceof StructureTower;
         }
     });
@@ -78,15 +88,14 @@ export const loop = ErrorMapper.wrapLoop(() => {
     }
 
     const links: AnyStructure[] | undefined = currentRoom.find(FIND_STRUCTURES, {
-        filter: (structure: AnyStructure) => {
+        filter(structure: AnyStructure) {
             return structure instanceof StructureLink;
         }
     });
-
-    if (towers.length > 0) {
+    if (links.length > 0) {
         for (const link of links) {
-            if (link instanceof StructureTower) {
-                roleTower.run(link, currentRoom);
+            if (link instanceof StructureLink) {
+                roleLink.run(link, currentRoom);
             }
         }
     }
@@ -102,6 +111,8 @@ export const loop = ErrorMapper.wrapLoop(() => {
             roleSpawnrecharger.run(creep);
         } else if (creepRole === 'builder') {
             roleBuilder.run(creep);
+        } else if (creepRole === 'linkTransporter') {
+            roleLinkTransporter.run(creep);
         }
     }
 });

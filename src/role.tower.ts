@@ -6,7 +6,7 @@ const roleTower = {
             tower.attack(hostileCreeps[0]);
         } else {
             const myCreeps: Creep[] = room.find(FIND_MY_CREEPS, {
-                filter: (creep: Creep) => {
+                filter(creep: Creep) {
                     if (creep.hits >= creep.hitsMax) {
                         return false;
                     }
@@ -19,7 +19,7 @@ const roleTower = {
                 tower.heal(myCreeps[0]);
             } else {
                 const myStructures: AnyStructure[] | undefined = room.find(FIND_MY_STRUCTURES, {
-                    filter: (structure: AnyStructure) => {
+                    filter(structure: AnyStructure) {
                         return structure.hitsMax > structure.hits;
                     }
                 });

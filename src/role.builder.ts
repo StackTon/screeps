@@ -22,7 +22,7 @@ const roleBuilder = {
                 }
             } else {
                 const roads: AnyStructure[] | undefined = creep.room.find(FIND_STRUCTURES, {
-                    filter: (structure: AnyStructure) => {
+                    filter(structure: AnyStructure) {
                         return structure instanceof StructureRoad && structure.hitsMax > structure.hits;
                     }
                 });

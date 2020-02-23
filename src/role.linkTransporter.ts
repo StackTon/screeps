@@ -1,4 +1,4 @@
-const roleHarvester = {
+const roleLinkTransporter = {
 
     run(creep: Creep) {
         if (creep.memory.working && creep.store[RESOURCE_ENERGY] === 0) {
@@ -9,11 +9,10 @@ const roleHarvester = {
             creep.memory.working = true;
         }
 
-        if (!creep.memory.working) {
-            const source: Source | null = Game.getObjectById(creep.memory.sourceId);
-
-            if (source && creep.harvest(source) === ERR_NOT_IN_RANGE) {
-                creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
+        if (creep.memory.working) {
+            const storage: StructureStorage | undefined = creep.room.storage;
+            if (storage && creep.transfer(storage, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+                creep.moveTo(storage, { visualizePathStyle: { stroke: '#ffffff' } });
             }
         }
         else {
@@ -22,11 +21,11 @@ const roleHarvester = {
                     return structure instanceof StructureLink;
                 }
             });
-            if (link && creep.transfer(link, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+            if (link && creep.withdraw(link, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
                 creep.moveTo(link, { visualizePathStyle: { stroke: '#ffffff' } });
             }
         }
     }
 };
 
-export default roleHarvester;
+export default roleLinkTransporter;

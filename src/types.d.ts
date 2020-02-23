@@ -7,9 +7,14 @@ interface CreepMemory {
   sourceId: string;
 }
 
+interface LinkType {
+  role: string
+}
+
 interface Memory {
   uuid: number;
   log: any;
+  links: { [linkId: string]: LinkType };
 }
 
 // `global` extension samples
