@@ -33,10 +33,10 @@ export const loop = ErrorMapper.wrapLoop(() => {
 
     const [source1, source2] = currentRoom.find(FIND_SOURCES);
 
-    const shouldSpanHarverster: Boolean = harvesters.length < 2;
-    const shouldSpanUpgrader: Boolean = upgraders.length < 2;
-    const shouldSpawnspawnRecharger: Boolean = spawnRechargers.length < 1;
-    const shouldSpawnBuilder: Boolean = spawnBuiler.length < 1;
+    const shouldSpanHarverster: boolean = harvesters.length < 2;
+    const shouldSpanUpgrader: boolean = upgraders.length < 2;
+    const shouldSpawnspawnRecharger: boolean = spawnRechargers.length < 1;
+    const shouldSpawnBuilder: boolean = spawnBuiler.length < 1;
 
     if (shouldSpanHarverster) {
         const newName = 'H' + Game.time;

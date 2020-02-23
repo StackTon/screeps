@@ -1,5 +1,5 @@
 const roleTower = {
-    run: function (tower: StructureTower, room: Room) {
+    run(tower: StructureTower, room: Room) {
         const hostileCreeps: Creep[] = room.find(FIND_HOSTILE_CREEPS);
 
         if (hostileCreeps.length > 0) {

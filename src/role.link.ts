@@ -1,5 +1,5 @@
 const roleLink = {
-    run: function (link: StructureLink, room: Room) {
+    run(link: StructureLink, room: Room) {
 
     }
 };
