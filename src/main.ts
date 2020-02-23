@@ -1,10 +1,11 @@
 import { ErrorMapper } from "utils/ErrorMapper";
 
-import roleHarvester from 'role.harvester';
-import roleUpgrader from 'role.upgrader';
-import roleTower from 'role.tower';
-import roleSpawnrecharger from 'role.spawnRecharger';
-import roleBuilder from 'role.builder';
+import roleHarvester from './role.harvester';
+import roleUpgrader from './role.upgrader';
+import roleTower from './role.tower';
+import roleSpawnrecharger from './role.spawnRecharger';
+import roleBuilder from './role.builder';
+import _ from "lodash";
 
 // When compiling TS to JS and bundling with rollup, the line numbers and file names in error messages change
 // This utility uses source maps to get the line numbers and file names of the original, TS source code
