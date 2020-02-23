@@ -76,6 +76,20 @@ export const loop = ErrorMapper.wrapLoop(() => {
         }
     }
 
+    const links: AnyStructure[] | undefined = currentRoom.find(FIND_STRUCTURES, {
+        filter: (structure: AnyStructure) => {
+            return structure instanceof StructureLink;
+        }
+    });
+
+    if (towers.length > 0) {
+        for (const link of links) {
+            if (link instanceof StructureTower) {
+                roleTower.run(link, currentRoom);
+            }
+        }
+    }
+
     for (const name in Game.creeps) {
         const creep = Game.creeps[name];
         const creepRole = creep.memory.role;
