@@ -1,19 +1,28 @@
 const roleLink = {
-    run(link: StructureLink, room: Room) {
-        if (link.store.getFreeCapacity(RESOURCE_ENERGY) === 0) {
-            const [link1, link2]: AnyStructure[] = room.find(FIND_STRUCTURES, {
+    run(currnetLink: StructureLink, room: Room) {
+        if (currnetLink.store.getFreeCapacity(RESOURCE_ENERGY) === 0) {
+            const links: AnyStructure[] = room.find(FIND_STRUCTURES, {
                 filter(structure: AnyStructure) {
                     return structure instanceof StructureLink;
                 }
             });
 
-            const currentLinkMemory = Memory.links[link.id];
+            const currentLinkMemory = Memory.links[currnetLink.id];
 
             if (currentLinkMemory.role === 'transporter') {
-                if (link.id !== link1.id && link1 instanceof StructureLink) {
-                    link.transferEnergy(link1);
-                } else if (link2 instanceof StructureLink) {
-                    link.transferEnergy(link2);
+                for (const linkId in Memory.links) {
+                    if (Memory.links.hasOwnProperty(linkId)) {
+                        const element = Memory.links[linkId];
+
+                        if (element.role === 'upgradeReceiver') {
+                            for (const link of links) {
+                                if (link.id === linkId && link instanceof StructureLink) {
+                                    currnetLink.transferEnergy(link);
+                                }
+                            }
+                        }
+
+                    }
                 }
             }
 
