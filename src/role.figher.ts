@@ -1,25 +1,17 @@
 const roleFigher = {
 
     run(creep: Creep) {
-        const wallToDestroy: AnyStructure[] | undefined = creep.room.find(FIND_STRUCTURES, {
-            filter(structure: AnyStructure) {
-                return structure.pos.x === 2 && structure.pos.y === 19;
+
+        const hostileCreeps: Creep[] | null = creep.pos.findInRange(FIND_HOSTILE_CREEPS, 10);
+        console.log(hostileCreeps)
+        if (hostileCreeps.length > 0) {
+            console.log(creep.attack(hostileCreeps[0]));
+            if (creep.attack(hostileCreeps[0]) === ERR_NOT_IN_RANGE) {
+                creep.moveTo(hostileCreeps[0], { visualizePathStyle: { stroke: '#ffaa00' } });
             }
-        });
-
-        if (creep.attack(wallToDestroy[0])) {
-            creep.moveTo(wallToDestroy[0]);
+        } else {
+            creep.moveTo(new RoomPosition(37, 41, 'W14S24'), { visualizePathStyle: { stroke: '#ffaa00' } });
         }
-
-        const hostileCreep: Creep | null = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-        const hostileStructure: AnyStructure | null = creep.pos.findClosestByRange(FIND_HOSTILE_STRUCTURES);
-
-        if (hostileCreep && creep.attack(hostileCreep)) {
-            creep.moveTo(hostileCreep);
-        } else if (hostileStructure && creep.attack(hostileStructure)) {
-            creep.moveTo(hostileStructure);
-        }
-
     }
 };
 

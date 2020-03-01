@@ -27,6 +27,8 @@ const roleBuilder = {
                     }
                 });
 
+                roads.sort((a, b) => a.hits - b.hits);
+
                 if (roads.length > 0 && creep.repair(roads[0]) === ERR_NOT_IN_RANGE) {
                     creep.moveTo(roads[0]);
                 }

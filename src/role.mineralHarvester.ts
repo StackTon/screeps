@@ -10,20 +10,21 @@ const roleHarvester = {
         }
 
         if (!creep.memory.working) {
-            const source: Source | null = Game.getObjectById(creep.memory.sourceId);
+            const source: Mineral | null = Game.getObjectById(creep.memory.sourceId);
 
             if (source && creep.harvest(source) === ERR_NOT_IN_RANGE) {
                 creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
             }
+
         }
         else {
-            const link: AnyStructure | null = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+            const terminal: AnyStructure | null = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                 filter(structure: AnyStructure) {
                     return structure instanceof StructureTerminal;
                 }
             });
-            if (link && creep.transfer(link, RESOURCE_HYDROGEN) === ERR_NOT_IN_RANGE) {
-                creep.moveTo(link, { visualizePathStyle: { stroke: '#ffffff' } });
+            if (terminal && creep.transfer(terminal, RESOURCE_HYDROGEN) === ERR_NOT_IN_RANGE) {
+                creep.moveTo(terminal, { visualizePathStyle: { stroke: '#ffffff' } });
             }
         }
     }
