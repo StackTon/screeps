@@ -9,11 +9,10 @@ const roleBuilder = {
         }
 
         if (!creep.memory.working) {
-            const storage = creep.room.storage;
+            const { storage } = creep.room;
             if (storage && creep.withdraw(storage, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
                 creep.moveTo(storage, { visualizePathStyle: { stroke: '#ffffff' } });
             }
-
         } else {
             const buildingStructures: ConstructionSite[] | undefined = creep.room.find(FIND_CONSTRUCTION_SITES);
             if (buildingStructures.length > 0) {
@@ -24,17 +23,15 @@ const roleBuilder = {
                 const roads: AnyStructure[] | undefined = creep.room.find(FIND_STRUCTURES, {
                     filter(structure: AnyStructure) {
                         return structure instanceof StructureRoad && structure.hitsMax > structure.hits;
-                    }
+                    },
                 });
 
-                roads.sort((a, b) => a.hits - b.hits);
-
                 if (roads.length > 0 && creep.repair(roads[0]) === ERR_NOT_IN_RANGE) {
-                    creep.moveTo(roads[0]);
+                    creep.moveTo(roads[0], { visualizePathStyle: { stroke: '#ffffff' } });
                 }
             }
         }
-    }
+    },
 };
 
 export default roleBuilder;

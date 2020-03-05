@@ -4,30 +4,26 @@ const roleLink = {
             const links: AnyStructure[] = room.find(FIND_STRUCTURES, {
                 filter(structure: AnyStructure) {
                     return structure instanceof StructureLink;
-                }
+                },
             });
 
             const currentLinkMemory = Memory.links[currnetLink.id];
 
             if (currentLinkMemory.role === 'transporter') {
-                for (const linkId in Memory.links) {
-                    if (Memory.links.hasOwnProperty(linkId)) {
-                        const element = Memory.links[linkId];
-
-                        if (element.role === 'upgradeReceiver') {
-                            for (const link of links) {
-                                if (link.id === linkId && link instanceof StructureLink) {
-                                    currnetLink.transferEnergy(link);
-                                }
+                for (let i = 0; i < Object.values(Memory.links).length; i++) {
+                    const link = Object.values(Memory.links)[i];
+                    if (link.role === 'receiver') {
+                        for (let j = 0; j < Object.values(links).length; j++) {
+                            const element = Object.values(links)[i];
+                            if (link.id === element.id && link instanceof StructureLink) {
+                                currnetLink.transferEnergy(link);
                             }
                         }
-
                     }
                 }
             }
-
         }
-    }
+    },
 };
 
 export default roleLink;

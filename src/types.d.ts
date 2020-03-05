@@ -8,18 +8,12 @@ interface CreepMemory {
 }
 
 interface LinkType {
-  role: string
+  role: string,
+  id: string
 }
 
 interface Memory {
   uuid: number;
   log: any;
   links: { [linkId: string]: LinkType };
-}
-
-// `global` extension samples
-declare namespace NodeJS {
-  interface Global {
-    log: any;
-  }
 }

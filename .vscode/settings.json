@@ -19,5 +19,6 @@
   },
   "[typescript]": {
     "editor.formatOnSave": true
-  }
+  },
+  "javascript.implicitProjectConfig.checkJs": true,
 }

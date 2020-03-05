@@ -15,15 +15,14 @@ const roleRemoteRepair = {
             if (source && creep.harvest(source) === ERR_NOT_IN_RANGE) {
                 creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
             }
-        }
-        else {
+        } else {
             const roads: AnyStructure[] | undefined = creep.room.find(FIND_STRUCTURES, {
                 filter(structure: AnyStructure) {
                     return structure instanceof StructureRoad && structure.hitsMax > structure.hits;
-                }
+                },
             });
 
-            roads.sort((a, b) => a.hits - b.hits);
+            roads.sort((a, b) => (b.hitsMax - b.hits) - (a.hitsMax - a.hits));
 
             if (roads.length > 0) {
                 if (creep.repair(roads[0]) === ERR_NOT_IN_RANGE) {
@@ -42,9 +41,8 @@ const roleRemoteRepair = {
                     }
                 }
             }
-
         }
-    }
+    },
 };
 
 export default roleRemoteRepair;

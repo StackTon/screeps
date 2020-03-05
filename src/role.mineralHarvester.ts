@@ -15,19 +15,17 @@ const roleHarvester = {
             if (source && creep.harvest(source) === ERR_NOT_IN_RANGE) {
                 creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
             }
-
-        }
-        else {
+        } else {
             const terminal: AnyStructure | null = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                 filter(structure: AnyStructure) {
                     return structure instanceof StructureTerminal;
-                }
+                },
             });
             if (terminal && creep.transfer(terminal, RESOURCE_HYDROGEN) === ERR_NOT_IN_RANGE) {
                 creep.moveTo(terminal, { visualizePathStyle: { stroke: '#ffffff' } });
             }
         }
-    }
+    },
 };
 
 export default roleHarvester;

@@ -19,6 +19,26 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "indent": ["error", 4]
+        "indent": [
+            "error",
+            4
+        ],
+        "max-len": [
+            "warn",
+            100,
+            {
+                "ignoreComments": true,
+                "ignoreStrings": true,
+                "code": 100,
+                "tabWidth": 4
+            }
+        ],
+        "import/prefer-default-export": 0,
+        "no-undef": 0,
+        "import/no-extraneous-dependencies": 0,
+        "import/no-unresolved": 0,
+        "import/extensions": 0,
+        "no-plusplus": 0,
+        "no-param-reassign": 0
     }
 }

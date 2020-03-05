@@ -11,7 +11,7 @@ const roleTower = {
                         return false;
                     }
                     return true;
-                }
+                },
             });
 
             if (myCreeps.length > 0) {
@@ -20,8 +20,8 @@ const roleTower = {
             } else {
                 const myStructures: AnyStructure[] | undefined = room.find(FIND_MY_STRUCTURES, {
                     filter(structure: AnyStructure) {
-                        return structure.hitsMax > structure.hits;
-                    }
+                        return structure.structureType !== STRUCTURE_RAMPART && structure.hitsMax > structure.hits;
+                    },
                 });
 
                 if (myStructures.length > 0) {
@@ -30,7 +30,7 @@ const roleTower = {
                 }
             }
         }
-    }
+    },
 };
 
 export default roleTower;
